@@ -87,13 +87,14 @@ WHERE last_name = 'WILLIAMS'
 UPDATE actor
 SET first_name =
 CASE
-WHEN first_name = 'HARPO' AND last_name = 'WILLIAMS'
+WHEN first_name = 'HARPO' 
     THEN 'GROUCHO'
-WHEN first_name = 'GROUCHO' AND last_name = 'WILLIAMS'
+WHEN first_name = 'GROUCHO' 
     THEN 'MUCHO GROUCHO'
-ELSE first_name
-END
+ELSE NULL
+END 
 ;
+
 -- 5a. You cannot locate the schema of the address table. Which query would you use to re-create it?`PRIMARY`
 CREATE TABLE IF NOT EXISTS address(
 	
