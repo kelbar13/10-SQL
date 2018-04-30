@@ -57,14 +57,16 @@ ALTER TABLE actor
 DROP COLUMN middle_name
 ;
 -- 4a. List the last names of actors, as well as how many actors have that last name.
-SELECT last_name,COUNT(*) as count
+SELECT last_name
+,COUNT(*) as count
 FROM actor
 GROUP BY last_name
 ORDER BY count DESC
 ;
 -- 4b. List last names of actors and the number of actors who have that last name, 
 -- but only for names that are shared by at least two actors
-SELECT last_name,COUNT(last_name) as count
+SELECT last_name
+,COUNT(last_name) as count
 FROM actor
 GROUP BY last_name
 HAVING count >= 2
@@ -83,8 +85,14 @@ WHERE last_name = 'WILLIAMS'
  BE CAREFUL NOT TO CHANGE THE FIRST NAME OF EVERY ACTOR TO MUCHO GROUCHO, HOWEVER! 
  (Hint: update the record using a unique identifier.)*/
 UPDATE actor
-SET first_name =  REPLACE(first_name, 'HARPO', 'GROUCHO')
-WHERE last_name = 'WILLIAMS'
+SET first_name =
+CASE
+WHEN first_name = 'HARPO' AND last_name = 'WILLIAMS'
+    THEN 'GROUCHO'
+WHEN first_name = 'GROUCHO' AND last_name = 'WILLIAMS'
+    THEN 'MUCHO GROUCHO'
+ELSE first_name
+END
 ;
 -- 5a. You cannot locate the schema of the address table. Which query would you use to re-create it?`PRIMARY`
 CREATE TABLE IF NOT EXISTS address(
